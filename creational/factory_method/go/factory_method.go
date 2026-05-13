@@ -1,7 +1,11 @@
 package main
 
+import (
+	"fmt"
+)
+
 type Product interface {
-	runApp() error
+	RunApp() error
 }
 
 type Factory interface {
@@ -24,8 +28,8 @@ type IosProduct struct {
 	Phone
 }
 
-func (p *IosProduct) runApp() error {
-	println(p.os + " app")
+func (p *IosProduct) RunApp() error {
+	fmt.Println(p.os + " app")
 	return nil
 }
 
@@ -41,23 +45,21 @@ type AndroidProduct struct {
 	Phone
 }
 
-func (p *AndroidProduct) runApp() error {
-	println(p.os + " app")
+func (p *AndroidProduct) RunApp() error {
+	fmt.Println(p.os + " app")
 	return nil
 }
 
 func run(f Factory) error {
 	p := f.Create()
-	return p.runApp()
+	return p.RunApp()
 }
 
 func main() {
-
 	var f Factory
 	f = AndroidFactory{}
 	run(f)
 
 	f = IosFactory{}
 	run(f)
-
 }

@@ -1,63 +1,75 @@
 package main
 
-// MessageImplementor 实现层接口：定义底层发送能力
-type MessageImplementor interface {
-	Send(text, to string)
+import "fmt"
+
+// Renderer 实现层接口：定义底层渲染能力
+type Renderer interface {
+	RenderCircle(radius float64)
+	RenderRect(width, height float64)
 }
 
-// --- Implementor 维度：发送渠道 ---
-type MessageSMS struct{}
+// --- 实现层 ---
 
-func (m *MessageSMS) Send(text, to string) {
-	println("SMS → " + to + ": " + text)
+type VectorRenderer struct{}
+
+func (v *VectorRenderer) RenderCircle(radius float64) {
+	fmt.Printf("向量绘制圆形，半径 %.1f\n", radius)
+}
+func (v *VectorRenderer) RenderRect(width, height float64) {
+	fmt.Printf("向量绘制矩形，%.1f × %.1f\n", width, height)
 }
 
-type MessageEmail struct{}
+type PixelRenderer struct{}
 
-func (m *MessageEmail) Send(text, to string) {
-	println("Email → " + to + ": " + text)
+func (p *PixelRenderer) RenderCircle(radius float64) {
+	fmt.Printf("像素绘制圆形，半径 %.1f\n", radius)
+}
+func (p *PixelRenderer) RenderRect(width, height float64) {
+	fmt.Printf("像素绘制矩形，%.1f × %.1f\n", width, height)
 }
 
-// AbstractionMessage 抽象层接口：定义上层业务行为
-type AbstractionMessage interface {
-	SendMessage(text, to string)
+// --- 抽象层 ---
+
+// Shape 基础抽象，持有实现层引用
+type Shape struct {
+	renderer Renderer
 }
 
-// --- Abstraction 维度：消息类型 ---
-type Abstraction struct {
-	implementor MessageImplementor
+// Circle 精化抽象：圆形
+type Circle struct {
+	Shape
+	radius float64
 }
 
-func NewAbstraction(impl MessageImplementor) AbstractionMessage {
-	return &Abstraction{implementor: impl}
+func NewCircle(r Renderer, radius float64) *Circle {
+	return &Circle{Shape: Shape{renderer: r}, radius: radius}
 }
 
-func (a *Abstraction) SendMessage(text, to string) {
-	a.implementor.Send(text, to)
+func (c *Circle) Draw() {
+	c.renderer.RenderCircle(c.radius)
 }
 
-// UrgentAbstraction 是 RefinedAbstraction，在抽象层扩展行为
-type UrgentAbstraction struct {
-	implementor MessageImplementor
+// Rect 精化抽象：矩形
+type Rect struct {
+	Shape
+	width, height float64
 }
 
-func NewUrgentAbstraction(impl MessageImplementor) AbstractionMessage {
-	return &UrgentAbstraction{implementor: impl}
+func NewRect(r Renderer, width, height float64) *Rect {
+	return &Rect{Shape: Shape{renderer: r}, width: width, height: height}
 }
 
-func (u *UrgentAbstraction) SendMessage(text, to string) {
-	u.implementor.Send("[URGENT] "+text, to)
+func (r *Rect) Draw() {
+	r.renderer.RenderRect(r.width, r.height)
 }
 
 func main() {
-	sms := &MessageSMS{}
-	email := &MessageEmail{}
+	vector := &VectorRenderer{}
+	pixel := &PixelRenderer{}
 
-	// 普通消息 × 两种渠道
-	NewAbstraction(sms).SendMessage("Hello", "1234567890")
-	NewAbstraction(email).SendMessage("Hello", "user@example.com")
-
-	// 加急消息 × 两种渠道
-	NewUrgentAbstraction(sms).SendMessage("Server is down", "1234567890")
-	NewUrgentAbstraction(email).SendMessage("Server is down", "oncall@example.com")
+	// 形状 × 渲染器，自由组合，互不影响
+	NewCircle(vector, 5).Draw()
+	NewCircle(pixel, 5).Draw()
+	NewRect(vector, 4, 3).Draw()
+	NewRect(pixel, 4, 3).Draw()
 }

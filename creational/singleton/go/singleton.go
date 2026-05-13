@@ -12,25 +12,19 @@ type Logger interface {
 	Info(string)
 }
 
-type logger struct {
-	mu sync.Mutex
-}
+type logger struct{}
 
 func (l *logger) Debug(msg string) {
-	l.mu.Lock()
-	defer l.mu.Unlock()
 	fmt.Fprintf(os.Stdout, "[DEBUG] %s %s\n", time.Now().Format(time.DateTime), msg)
 }
 
 func (l *logger) Info(msg string) {
-	l.mu.Lock()
-	defer l.mu.Unlock()
 	fmt.Fprintf(os.Stdout, "[INFO]  %s %s\n", time.Now().Format(time.DateTime), msg)
 }
 
 var (
 	once      sync.Once
-	singleton *logger
+	singleton Logger
 )
 
 func GetLogger() Logger {
