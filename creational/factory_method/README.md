@@ -55,8 +55,7 @@ Client ──→ creator.someOperation()
 
 | 语言 | 状态 | 链接 |
 |------|------|------|
-| Go | ✅ | [查看实现](../../go/creational/factory_method/) |
-| Rust | 🚧 进行中 | [查看实现](../../rust/src/creational/factory_method/) |
+| Go | ✅ |  [查看实现](./go/)|
 
 ## 延伸阅读
 

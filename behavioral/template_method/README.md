@@ -53,5 +53,4 @@
 
 | 语言 | 状态 | 链接 |
 |------|------|------|
-| Go | ✅ 已完成 | [查看实现](../../go/behavioral/template_method/) |
-| Rust | 🚧 进行中 | [查看实现](../../rust/src/behavioral/template_method/) |
+| Go | ✅ 已完成 |  [查看实现](./go/)|

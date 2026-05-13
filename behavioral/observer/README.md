@@ -53,5 +53,4 @@ Subject 状态变化 → notify() → 依次调用每个 Observer.update()
 
 | 语言 | 状态 | 链接 |
 |------|------|------|
-| Go | ✅ 已完成 | [查看实现](../../go/behavioral/observer/) |
-| Rust | 🚧 进行中 | [查看实现](../../rust/src/behavioral/observer/) |
+| Go | ✅ 已完成 |  [查看实现](./go/)|

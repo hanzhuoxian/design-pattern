@@ -47,5 +47,4 @@ Client → collection.iterator() → 得到 Iterator → 逐步调用 next()
 
 | 语言 | 状态 | 链接 |
 |------|------|------|
-| Go | ✅ 已完成 | [查看实现](../../go/behavioral/iterator/) |
-| Rust | 🚧 进行中 | [查看实现](../../rust/src/behavioral/iterator/) |
+| Go | ✅ 已完成 |  [查看实现](./go/)|

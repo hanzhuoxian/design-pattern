@@ -61,8 +61,7 @@
 
 | 语言 | 状态 | 链接 |
 |------|------|------|
-| Go | ✅ | [查看实现](../../go/creational/abstract_factory/) |
-| Rust | 🚧 进行中 | [查看实现](../../rust/src/creational/abstract_factory/) |
+| Go | ✅ |  [查看实现](./go/)|
 
 ## 延伸阅读
 

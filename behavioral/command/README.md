@@ -56,5 +56,4 @@ Client → 创建 ConcreteCommand(receiver) → 传给 Invoker → Invoker.execu
 
 | 语言 | 状态 | 链接 |
 |------|------|------|
-| Go | ✅ 已完成 | [查看实现](../../go/behavioral/command/) |
-| Rust | 🚧 进行中 | [查看实现](../../rust/src/behavioral/command/) |
+| Go | ✅ 已完成 |  [查看实现](./go/)|

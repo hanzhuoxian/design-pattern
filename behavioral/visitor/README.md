@@ -59,5 +59,4 @@
 
 | 语言 | 状态 | 链接 |
 |------|------|------|
-| Go | ✅ 已完成 | [查看实现](../../go/behavioral/visitor/) |
-| Rust | 🚧 进行中 | [查看实现](../../rust/src/behavioral/visitor/) |
+| Go | ✅ 已完成 |  [查看实现](./go/)|

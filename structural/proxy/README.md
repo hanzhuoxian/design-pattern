@@ -69,5 +69,4 @@ Client ──► Subject (接口)
 
 | 语言 | 状态 | 链接 |
 |------|------|------|
-| Go | ✅ 已完成 | [查看实现](../../go/structural/proxy/) |
-| Rust | 🚧 进行中 | [查看实现](../../rust/src/structural/proxy/) |
+| Go | ✅ 已完成 |  [查看实现](./go/)|

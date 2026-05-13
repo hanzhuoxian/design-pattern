@@ -48,5 +48,4 @@ Originator 是唯一知道如何创建和恢复备忘录的对象
 
 | 语言 | 状态 | 链接 |
 |------|------|------|
-| Go | ✅ 已完成 | [查看实现](../../go/behavioral/memento/) |
-| Rust | 🚧 进行中 | [查看实现](../../rust/src/behavioral/memento/) |
+| Go | ✅ 已完成 |  [查看实现](./go/)|
