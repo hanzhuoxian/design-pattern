@@ -2,6 +2,15 @@ package main
 
 import "fmt"
 
+// 场景：电商结账集成多家第三方支付 SDK
+//
+// 痛点对比：
+//   不用适配器 → 业务代码直接调用各 SDK 原生方法（AliPay / WeChatPay），接口各不相同
+//                 切换支付渠道要改 OrderService；单位换算（元→分）等细节散落在业务层
+//
+//   用适配器  → 每个 SDK 包一层 Adapter，统一实现 PaymentProcessor 接口
+//                 OrderService 只依赖接口，切换渠道只换注入对象，业务代码零改动
+
 // ========== 第三方 SDK：支付宝（不可修改）==========
 
 type AliPaySDK struct{}

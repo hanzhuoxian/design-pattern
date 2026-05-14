@@ -5,19 +5,16 @@ import (
 	"log"
 )
 
-// 场景：订单系统向用户发送通知，支持邮件、短信、Slack 三种渠道。
+// 场景：订单系统向用户发送通知，支持邮件、短信、Slack 三种渠道
 //
-// 没有工厂方法时，OrderService 里会出现：
+// 痛点对比：
+//   不用工厂方法 → OrderService 内写 switch channel { case "email": ... case "sms": ... }
+//                   每次新增渠道都要改业务代码，违反开闭原则
+//                   多个业务（下单通知、发货通知）各自维护各自的 switch，逻辑重复
 //
-//	switch channel {
-//	case "email": notifier = &EmailNotifier{...}
-//	case "sms":   notifier = &SMSNotifier{...}
-//	}
-//
-// 每次新增渠道都要改业务代码，违反开闭原则。
-//
-// 工厂方法的解法：把"如何创建通知器"委托给具体工厂，
-// OrderService 只依赖 NotifierFactory 接口，新增渠道只需加新工厂。
+//   用工厂方法  → 把"如何创建 Notifier"委托给具体工厂
+//                   OrderService 只依赖 NotifierFactory 接口，新增渠道只加一个 Factory
+//                   所有业务共享工厂注入，业务代码零改动
 
 // Notifier 产品接口
 type Notifier interface {

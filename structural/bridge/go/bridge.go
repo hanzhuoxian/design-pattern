@@ -2,6 +2,15 @@ package main
 
 import "fmt"
 
+// 场景：绘图应用支持多种形状 × 多种渲染方式（向量 / 像素）
+//
+// 痛点对比：
+//   不用桥接 → 每种组合单独建类：VectorCircle、PixelCircle、VectorRect、PixelRect…
+//               M 种形状 × N 种渲染 = M×N 个类；新增一种渲染方式要新增 M 个类
+//
+//   用桥接  → 形状（抽象层）持有 Renderer（实现层）引用，两个维度独立扩展
+//               M + N 个类搞定；新增渲染方式只加 1 个 Renderer，形状代码零改动
+
 // Renderer 实现层接口：定义底层渲染能力
 type Renderer interface {
 	RenderCircle(radius float64)

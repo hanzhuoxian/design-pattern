@@ -2,11 +2,14 @@ package main
 
 import "fmt"
 
-// 问题场景：开发跨平台桌面应用，需要在 Windows 和 macOS 上渲染 UI 组件。
+// 场景：跨平台桌面应用 UI 渲染（Windows / macOS）
 //
-// 核心问题：Button 和 Checkbox 必须来自同一平台，否则视觉风格不一致。
-// 如果直接 new(WindowsButton) + new(MacCheckbox)，代码可以编译，但 UI 就乱了。
-// 抽象工厂通过让工厂负责"整族对象的创建"，从根本上杜绝了这种混用。
+// 痛点对比：
+//   不用抽象工厂 → new(WindowsButton) + new(MacCheckbox) 编译通过，但运行期 UI 风格混乱
+//                   新增 Linux 平台需要在每个业务调用点散改，极易遗漏导致控件跨平台混用
+//
+//   用抽象工厂  → 工厂负责"整族对象的创建"，同一工厂产出的控件天然风格一致
+//                   新增平台只加一个 Factory 实现，业务代码（Application）零改动
 
 // ---------- 抽象产品 ----------
 

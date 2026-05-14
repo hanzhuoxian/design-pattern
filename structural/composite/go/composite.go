@@ -1,15 +1,16 @@
-// Composite 模式——以文件系统为例
-//
-// 问题：目录可以包含文件，也可以包含子目录。如果不用该模式，
-// 计算大小、打印结构等操作都需要写 if file / if directory 的分支，
-// 且每个使用方都要自己做递归——逻辑分散、难以扩展。
-//
-// 解决：File（叶）和 Directory（组合）实现同一接口 Node，
-// 调用方对任意节点调用 Size() / Print()，无需关心内部结构。
-
 package main
 
 import "fmt"
+
+// 场景：文件系统中文件与目录的统一操作（大小计算、结构打印）
+//
+// 痛点对比：
+//   不用 Composite → 操作函数须区分文件和目录，调用方自己写递归：
+//                     if isFile { return file.size } else { for _, c := range dir.children { ... } }
+//                     每个遍历场景重写一次递归；新增 SymLink 等类型要改所有遍历代码
+//
+//   用 Composite  → File（叶）和 Directory（组合）实现同一 Node 接口
+//                     调用方对任意节点调用 Size() / Print()，无需区分类型，无需自己递归
 
 // Node 统一接口，文件和目录都实现它
 type Node interface {
