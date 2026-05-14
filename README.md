@@ -16,8 +16,6 @@
   - [语言支持](#语言支持)
   - [目录结构](#目录结构)
   - [如何使用](#如何使用)
-    - [运行 Go 示例](#运行-go-示例)
-    - [运行 Rust 示例](#运行-rust-示例)
   - [贡献指南](#贡献指南)
   - [参考资料](#参考资料)
   - [许可证](#许可证)
@@ -80,77 +78,91 @@
 
 ## 语言支持
 
-| 语言 | 状态 | 目录 |
+| 语言 | 状态 | 说明 |
 |------|------|------|
-| Go | ✅ 已实现 | `go/` |
+| Go | ✅ 已实现 | 每个模式位于对应目录的 `go/` 子目录下 |
 | Python | 📅 计划中 | - |
 | Java | 📅 计划中 | - |
 | TypeScript | 📅 计划中 | - |
-| C++ | 📅 计划中 | - |
+| Rust | 📅 计划中 | - |
 
 ---
 
 ## 目录结构
 
+每个模式以**模式为第一层、语言为第二层**组织，便于横向对比不同语言的实现：
+
 ```
 design-pattern/
 ├── README.md
-├── README.zh-CN.md
-│
-├── go/                          # Go 实现
+├── LICENSE
+├── cmd/                             # 脚手架工具
 │   ├── go.mod
-│   ├── creational/              # 创建型模式
-│   │   ├── singleton/
-│   │   ├── factory_method/
-│   │   ├── abstract_factory/
-│   │   ├── builder/
-│   │   └── prototype/
-│   ├── structural/              # 结构型模式
-│   │   ├── adapter/
-│   │   ├── bridge/
-│   │   ├── composite/
-│   │   ├── decorator/
-│   │   ├── facade/
-│   │   ├── flyweight/
-│   │   └── proxy/
-│   └── behavioral/              # 行为型模式
-│       ├── chain_of_responsibility/
-│       ├── command/
-│       ├── interpreter/
-│       ├── iterator/
-│       ├── mediator/
-│       ├── memento/
-│       ├── observer/
-│       ├── state/
-│       ├── strategy/
-│       ├── template_method/
-│       └── visitor/
+│   └── designctl.go                 # 自动生成模式目录和文件骨架
 │
-└── rust/                        # Rust 实现（进行中）
-    ├── Cargo.toml
-    └── src/
+├── creational/                      # 创建型模式
+│   ├── README.md
+│   ├── singleton/
+│   │   ├── README.md
+│   │   └── go/
+│   ├── factory_method/
+│   │   ├── README.md
+│   │   └── go/
+│   ├── abstract_factory/
+│   │   ├── README.md
+│   │   └── go/
+│   ├── builder/
+│   │   ├── README.md
+│   │   └── go/
+│   └── prototype/
+│       ├── README.md
+│       └── go/
+│
+├── structural/                      # 结构型模式
+│   ├── README.md
+│   └── [adapter/bridge/composite/decorator/facade/flyweight/proxy]/
+│       ├── README.md
+│       └── go/
+│
+└── behavioral/                      # 行为型模式
+    ├── README.md
+    └── [chain_of_responsibility/command/interpreter/iterator/
+        mediator/memento/observer/state/strategy/template_method/visitor]/
+        ├── README.md
+        └── go/
 ```
 
 每个模式目录下包含：
-- 语言实现代码
-- 单元测试
+- `README.md`：模式说明、适用场景、结构图、优缺点
+- `go/`：Go 语言实现（独立 Go module）
 
 ---
 
 ## 如何使用
 
-### 运行 Go 示例
+每个模式的 Go 实现是独立的 Go module，进入对应目录运行：
 
 ```bash
-cd go
+# 以单例模式为例
+cd creational/singleton/go
 go test ./...
 ```
 
-### 运行 Rust 示例
+批量运行所有 Go 测试：
 
 ```bash
-cd rust
-cargo test
+find . -name 'go.mod' -not -path './cmd/*' | while read mod; do
+  dir=$(dirname "$mod")
+  echo "==> $dir"
+  (cd "$dir" && go test ./...)
+done
+```
+
+使用脚手架工具为新模式生成目录和文件骨架：
+
+```bash
+cd cmd
+go run designctl.go
 ```
 
 ---
